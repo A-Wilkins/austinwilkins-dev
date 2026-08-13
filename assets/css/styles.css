@@ -14,6 +14,8 @@
   --accent-dim:#f08a68;
   --line:      rgba(255,255,255,.09);
   --line-soft: rgba(255,255,255,.05);
+  --art-line:  rgba(255,255,255,.24);
+  --art-arc:   rgba(255,255,255,.55);
   --shadow:    0 1px 2px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.28);
 
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
@@ -36,6 +38,8 @@
   --accent-dim:#a83c1d;
   --line:      rgba(0,0,0,.11);
   --line-soft: rgba(0,0,0,.06);
+  --art-line:  rgba(0,0,0,.24);
+  --art-arc:   rgba(0,0,0,.55);
   --shadow:    0 1px 2px rgba(0,0,0,.05), 0 12px 32px rgba(0,0,0,.07);
 }
 
@@ -149,6 +153,57 @@ ul { list-style: none; margin: 0; padding: 0; }
 @media (prefers-reduced-motion: reduce) { .hero__grid { animation: none; } }
 
 .hero__inner { position: relative; }
+
+/* ---------- hero signature graphic ---------- */
+.hero__art {
+  position: absolute; top: 50%; right: -1.5rem;
+  width: min(40vw, 520px); aspect-ratio: 1;
+  translate: 0 -50%;
+  pointer-events: none;
+  opacity: .95;
+}
+.hero__art svg { width: 100%; height: 100%; overflow: visible; }
+
+.art-ring, .art-arc, .art-pulse, .art-core-ring {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+.art-ring      { stroke: var(--art-line); stroke-width: 1; }
+.art-ticks     { fill: none; stroke: var(--art-line); stroke-width: 7; stroke-dasharray: 1.5 20; }
+.art-core-ring { stroke: var(--art-line); stroke-width: 1; }
+
+.art-arc { stroke-width: 2; stroke-linecap: round; }
+.art-arc--accent { stroke: var(--accent); }
+.art-arc--dim    { stroke: var(--art-arc); }
+
+.art-node { fill: var(--accent); }
+.art-core { fill: var(--accent); }
+
+/* a short dash that travels around the outer ring — circumference ≈ 1570.8 */
+.art-pulse {
+  stroke: var(--accent); stroke-width: 2; stroke-linecap: round;
+  stroke-dasharray: 26 1544.8;
+  animation: art-travel 7s linear infinite;
+}
+@keyframes art-travel { to { stroke-dashoffset: -1570.8; } }
+
+/* rotating groups — transform-box keeps the origin on the viewBox centre */
+.art-spin { transform-origin: 300px 300px; transform-box: view-box; }
+.art-spin--slow { animation: art-spin 54s linear infinite; }
+.art-spin--rev  { animation: art-spin 38s linear infinite reverse; }
+.art-spin--fast { animation: art-spin 24s linear infinite; }
+@keyframes art-spin { to { transform: rotate(360deg); } }
+
+/* Motion is decorative: hold the composition still rather than remove it. */
+@media (prefers-reduced-motion: reduce) {
+  .art-spin, .art-pulse { animation: none; }
+}
+
+/* Hide below the width where the art would crowd the headline and blurb.
+   Measured: at 1000px the art box overlaps the blurb; at 1100px it clears it. */
+@media (max-width: 1100px) {
+  .hero__art { display: none; }
+}
 
 .eyebrow {
   font-family: var(--font-mono); font-size: .78rem; text-transform: uppercase;

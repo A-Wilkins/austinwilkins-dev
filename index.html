@@ -141,6 +141,43 @@ try{var t=localStorage.getItem('theme');if(t)d.setAttribute('data-theme',t);}cat
   <!-- ============================= HERO ============================= -->
   <section class="hero" id="top">
     <div class="hero__grid" aria-hidden="true"></div>
+
+    <!-- Signature hero graphic: concentric orbits with a pulse travelling the outer
+         ring. Pure SVG + CSS, no library. Decorative only, hidden from assistive tech. -->
+    <div class="hero__art" aria-hidden="true">
+      <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+        <circle class="art-ticks" cx="300" cy="300" r="276"/>
+
+        <circle class="art-ring" cx="300" cy="300" r="250"/>
+        <circle class="art-ring" cx="300" cy="300" r="180"/>
+        <circle class="art-ring" cx="300" cy="300" r="110"/>
+
+        <line class="art-ring" x1="300" y1="24"  x2="300" y2="86"/>
+        <line class="art-ring" x1="300" y1="514" x2="300" y2="576"/>
+        <line class="art-ring" x1="24"  y1="300" x2="86"  y2="300"/>
+        <line class="art-ring" x1="514" y1="300" x2="576" y2="300"/>
+
+        <g class="art-spin art-spin--slow">
+          <path class="art-arc art-arc--dim" d="M 550 300 A 250 250 0 0 1 300 550"/>
+          <circle class="art-node" cx="300" cy="550" r="6"/>
+        </g>
+
+        <g class="art-spin art-spin--rev">
+          <path class="art-arc art-arc--accent" d="M 120 300 A 180 180 0 0 1 390 144.12"/>
+          <circle class="art-node" cx="390" cy="144.12" r="5"/>
+        </g>
+
+        <g class="art-spin art-spin--fast">
+          <path class="art-arc art-arc--dim" d="M 355 395.26 A 110 110 0 0 1 196.63 262.38"/>
+          <circle class="art-node" cx="196.63" cy="262.38" r="4"/>
+        </g>
+
+        <circle class="art-pulse" cx="300" cy="300" r="250"/>
+
+        <circle class="art-core-ring" cx="300" cy="300" r="26"/>
+        <circle class="art-core" cx="300" cy="300" r="7"/>
+      </svg>
+    </div>
     <div class="wrap hero__inner">
       <p class="eyebrow reveal">Software Engineer</p>
 
