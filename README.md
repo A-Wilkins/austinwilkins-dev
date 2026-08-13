@@ -11,7 +11,7 @@ austinwilkins-dev/
 │   ├── css/styles.css      design system — all tokens live in :root at the top
 │   ├── js/main.js          theme toggle, typewriter, scroll reveals, nav state
 │   └── img/                images go here
-├── resume/                 put your resume PDF here
+├── resume/                 resume PDF
 ├── favicon.svg
 ├── robots.txt
 └── sitemap.xml
@@ -61,7 +61,7 @@ Every colour, font, and spacing value is a token at the top of `assets/css/style
 
 ```css
 :root {
-  --bg:     #0a0b0d;   /* page background            */
+  --bg:     #121418;   /* page background            */
   --text:   #ecedef;   /* body text                  */
   --accent: #e5643c;   /* the one signal colour      */
   ...
@@ -85,9 +85,9 @@ Search `index.html` for `TODO`. Every one is marked.
 - [x] **LinkedIn URL** — `linkedin.com/in/austin-r-wilkins`
 - [x] **Resume PDF** — in place, scanned clean for hidden text (10pt/12pt only, no white fills)
 - [x] **Location** — Naples, Florida
-- [ ] **Live URL for HyperLocalHomes** — card link is `#`
-- [ ] **Live URL for Omega National Title** — card link is `#`
-- [ ] **Live URL for My Local Everything** — card link is `#`
+- [x] **Live URL for HyperLocalHomes** — hyperlocalhomes.com
+- [x] **Live URL for Omega National Title** — omeganationaltitle.com
+- [x] **Live URL for My Local Everything** — mylocaleverything.com
 - [ ] **OG image** — `assets/img/og-card.png`, 1200×630, for link previews in Slack/LinkedIn/iMessage
 - [ ] **Confirm the project descriptions** are how you want the work characterised
 
