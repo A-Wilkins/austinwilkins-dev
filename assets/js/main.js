@@ -18,7 +18,7 @@
         theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
     }
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0a0b0d' : '#faf9f7');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#121418' : '#faf9f7');
   }
 
   // dark is the design default; a stored choice wins, and the head script has

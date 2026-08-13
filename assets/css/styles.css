@@ -5,9 +5,9 @@
 
 :root {
   /* dark is the default theme */
-  --bg:        #0a0b0d;
-  --bg-alt:    #101216;
-  --surface:   #14171c;
+  --bg:        #121418;
+  --bg-alt:    #181b20;
+  --surface:   #1c2026;
   --text:      #ecedef;
   --muted:     #8b909a;
   --accent:    #e5643c;
@@ -156,8 +156,10 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 /* ---------- hero signature graphic ---------- */
 .hero__art {
-  position: absolute; top: 50%; right: -1.5rem;
-  width: min(40vw, 520px); aspect-ratio: 1;
+  position: absolute; top: 50%;
+  /* align the art's right edge to the content column, never off-screen */
+  right: max(1.5rem, calc((100vw - var(--wrap)) / 2));
+  width: min(36vw, 470px); aspect-ratio: 1;
   translate: 0 -50%;
   pointer-events: none;
   opacity: .95;
