@@ -263,7 +263,8 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 /* ---------- about ---------- */
-.about { display: grid; grid-template-columns: 1.5fr 1fr; gap: clamp(2rem, 6vw, 5rem); align-items: start; }
+/* Panel carries more rows now, so it gets more of the column. */
+.about { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
 .about__body p { color: var(--muted); max-width: 62ch; }
 .about__body .section__title { max-width: 24ch; }
 
@@ -271,12 +272,15 @@ ul { list-style: none; margin: 0; padding: 0; }
   border: 1px solid var(--line); border-radius: var(--radius);
   padding: 1.6rem; background: var(--surface); box-shadow: var(--shadow);
 }
-.about__facts dl { margin: 0; display: grid; gap: 1.1rem; }
+.about__facts dl { margin: 0; display: grid; gap: 0; }
+.about__facts dl > div { padding: .8rem 0; border-bottom: 1px solid var(--line-soft); }
+.about__facts dl > div:first-child { padding-top: 0; }
+.about__facts dl > div:last-child { padding-bottom: 0; border-bottom: 0; }
 .about__facts dt {
-  font-size: .72rem; text-transform: uppercase; letter-spacing: .14em;
-  color: var(--muted); margin-bottom: .25rem;
+  font-size: .69rem; text-transform: uppercase; letter-spacing: .14em;
+  color: var(--muted); margin-bottom: .3rem;
 }
-.about__facts dd { margin: 0; font-size: .95rem; }
+.about__facts dd { margin: 0; font-size: .92rem; line-height: 1.45; }
 .dot {
   display: inline-block; width: 7px; height: 7px; border-radius: 50%;
   background: #3fb950; margin-right: .5rem; translate: 0 -1px;
