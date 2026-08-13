@@ -12,6 +12,7 @@ austinwilkins-dev/
 │   ├── js/main.js          theme toggle, typewriter, scroll reveals, nav state
 │   └── img/                images go here
 ├── resume/                 resume PDF
+├── net-worth/              the Net Worth Tracker tool (its own README inside)
 ├── favicon.svg
 ├── robots.txt
 └── sitemap.xml

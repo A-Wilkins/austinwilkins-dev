@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Net Worth Tracker — private, no account, no cloud</title>
+<meta name="description" content="A free net worth tracker that runs entirely in your browser. No signup, no account, no server. Your financial data never leaves your device.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#101215">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>
+(function(){var d=document.documentElement;d.classList.add('js');
+try{var t=localStorage.getItem('nw.theme');if(t)d.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="shell topbar__inner">
+    <div class="brand">
+      <svg class="brand__mark" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 17.5 9 11l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="9" cy="11" r="1.8" fill="currentColor"/>
+        <circle cx="13" cy="15" r="1.8" fill="currentColor"/>
+      </svg>
+      <span class="brand__name">Net&nbsp;Worth</span>
+    </div>
+
+    <p class="privacy-badge" title="This page makes no network requests. Nothing is uploaded.">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="privacy-badge__icon">
+        <path d="M12 2 4 5.5v6c0 4.6 3.2 8.8 8 10.5 4.8-1.7 8-5.9 8-10.5v-6L12 2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="m8.6 11.8 2.3 2.3 4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Stored on this device only
+    </p>
+
+    <div class="topbar__actions">
+      <button class="btn btn--quiet" id="btn-export" type="button">Export</button>
+      <button class="btn btn--quiet" id="btn-import" type="button">Import</button>
+      <input type="file" id="file-import" accept="application/json" hidden>
+      <button class="iconbtn" id="theme-toggle" type="button" aria-label="Switch to light theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.2A9 9 0 1 1 10.8 3a7 7 0 0 0 10.2 10.2Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-13.5a1 1 0 0 1 1 1V6a1 1 0 1 1-2 0V4.5a1 1 0 0 1 1-1Zm0 15a1 1 0 0 1 1 1V21a1 1 0 1 1-2 0v-1.5a1 1 0 0 1 1-1ZM3.5 12a1 1 0 0 1 1-1H6a1 1 0 1 1 0 2H4.5a1 1 0 0 1-1-1Zm15 0a1 1 0 0 1 1-1H21a1 1 0 1 1 0 2h-1.5a1 1 0 0 1-1-1ZM5.6 5.6a1 1 0 0 1 1.4 0l1.1 1.1a1 1 0 0 1-1.4 1.4L5.6 7a1 1 0 0 1 0-1.4Zm10.3 10.3a1 1 0 0 1 1.4 0l1.1 1.1a1 1 0 0 1-1.4 1.4l-1.1-1.1a1 1 0 0 1 0-1.4Zm2.5-10.3a1 1 0 0 1 0 1.4L17.3 8.1a1 1 0 1 1-1.4-1.4L17 5.6a1 1 0 0 1 1.4 0ZM8.1 15.9a1 1 0 0 1 0 1.4L7 18.4A1 1 0 0 1 5.6 17l1.1-1.1a1 1 0 0 1 1.4 0Z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="shell">
+
+  <!-- ============ FIRST RUN ============ -->
+  <section class="empty" id="empty-state" hidden>
+    <h1 class="empty__title">Track your net worth without handing it to anyone.</h1>
+    <p class="empty__lead">
+      Everything you enter stays in this browser. There is no account to create, no
+      server to send it to, and no way for anyone else — including me — to see it.
+      Export your data any time as a plain JSON file you own.
+    </p>
+    <div class="empty__actions">
+      <button class="btn btn--primary" id="btn-start">Start with my own accounts</button>
+      <button class="btn btn--ghost" id="btn-demo">Explore with sample data</button>
+    </div>
+    <p class="empty__note">Sample data is fake and lives only in this browser. Clearing it removes every trace.</p>
+  </section>
+
+  <!-- ============ DASHBOARD ============ -->
+  <div id="dashboard" hidden>
+
+    <!-- KPI row -->
+    <section class="kpis" aria-label="Summary">
+      <div class="kpi kpi--hero">
+        <p class="kpi__label">Net worth</p>
+        <p class="kpi__value" id="kpi-networth">—</p>
+        <p class="kpi__delta" id="kpi-delta"></p>
+      </div>
+      <div class="kpi">
+        <p class="kpi__label">Assets</p>
+        <p class="kpi__value kpi__value--sm" id="kpi-assets">—</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi__label">Liabilities</p>
+        <p class="kpi__value kpi__value--sm" id="kpi-liabilities">—</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi__label">Snapshots</p>
+        <p class="kpi__value kpi__value--sm" id="kpi-count">—</p>
+        <p class="kpi__sub" id="kpi-since"></p>
+      </div>
+    </section>
+
+    <!-- Trend chart -->
+    <section class="panel viz-root" aria-labelledby="trend-title">
+      <header class="panel__head">
+        <div>
+          <h2 class="panel__title" id="trend-title">Progress over time</h2>
+          <p class="panel__sub" id="trend-sub"></p>
+        </div>
+        <div class="controls" role="group" aria-label="Chart options">
+          <div class="segmented" role="group" aria-label="Time range">
+            <button type="button" data-range="6"  class="seg">6M</button>
+            <button type="button" data-range="12" class="seg">1Y</button>
+            <button type="button" data-range="24" class="seg">2Y</button>
+            <button type="button" data-range="0"  class="seg is-on">All</button>
+          </div>
+          <div class="segmented" role="group" aria-label="Chart type">
+            <button type="button" data-shape="area" class="seg is-on">Area</button>
+            <button type="button" data-shape="line" class="seg">Line</button>
+            <button type="button" data-shape="bar"  class="seg">Bars</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="serieskeys" id="series-toggles" role="group" aria-label="Series shown"></div>
+
+      <figure class="figure">
+        <div class="chart" id="chart-trend"></div>
+        <figcaption class="figure__cap" id="trend-cap"></figcaption>
+      </figure>
+
+      <details class="tableview">
+        <summary>View as table</summary>
+        <div class="tablewrap" id="table-trend"></div>
+      </details>
+    </section>
+
+    <!-- Breakdown -->
+    <section class="panel viz-root" aria-labelledby="mix-title">
+      <header class="panel__head">
+        <div>
+          <h2 class="panel__title" id="mix-title">Where it sits</h2>
+          <p class="panel__sub" id="mix-sub"></p>
+        </div>
+        <div class="segmented" role="group" aria-label="Breakdown side">
+          <button type="button" data-side="asset" class="seg is-on">Assets</button>
+          <button type="button" data-side="liability" class="seg">Liabilities</button>
+        </div>
+      </header>
+      <figure class="figure">
+        <div class="chart chart--bars" id="chart-mix"></div>
+      </figure>
+    </section>
+
+    <!-- Accounts -->
+    <section class="panel" aria-labelledby="acct-title">
+      <header class="panel__head">
+        <div>
+          <h2 class="panel__title" id="acct-title">Accounts</h2>
+          <p class="panel__sub">Update the balances, then save a snapshot to record today.</p>
+        </div>
+        <button class="btn btn--primary" id="btn-snapshot" type="button">Save snapshot</button>
+      </header>
+
+      <div class="accounts" id="accounts-asset"></div>
+      <div class="accounts" id="accounts-liability"></div>
+
+      <form class="addrow" id="form-account" autocomplete="off">
+        <input class="input" name="name" placeholder="Account name" required maxlength="40">
+        <select class="input" name="category" id="sel-category"></select>
+        <input class="input input--num" name="value" type="number" step="0.01" placeholder="0.00" required>
+        <button class="btn btn--ghost" type="submit">Add account</button>
+      </form>
+    </section>
+
+    <!-- Expenses (optional) -->
+    <section class="panel" id="expenses-panel" aria-labelledby="exp-title">
+      <header class="panel__head">
+        <div>
+          <h2 class="panel__title" id="exp-title">Expenses</h2>
+          <p class="panel__sub">Optional. Off by default — turn it on only if you want it.</p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="toggle-expenses">
+          <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+          <span class="switch__label">Enable</span>
+        </label>
+      </header>
+
+      <div id="expenses-body" hidden>
+        <div class="exp-summary">
+          <div class="kpi kpi--flat">
+            <p class="kpi__label">This month</p>
+            <p class="kpi__value kpi__value--sm" id="exp-month">—</p>
+          </div>
+          <div class="kpi kpi--flat">
+            <p class="kpi__label">Monthly average</p>
+            <p class="kpi__value kpi__value--sm" id="exp-avg">—</p>
+          </div>
+        </div>
+
+        <figure class="figure viz-root">
+          <div class="chart chart--bars" id="chart-expenses"></div>
+        </figure>
+
+        <form class="addrow" id="form-expense" autocomplete="off">
+          <input class="input" name="date" type="date" required>
+          <select class="input" name="category" id="sel-exp-category"></select>
+          <input class="input input--num" name="amount" type="number" step="0.01" placeholder="0.00" required>
+          <input class="input" name="note" placeholder="Note (optional)" maxlength="60">
+          <button class="btn btn--ghost" type="submit">Add expense</button>
+        </form>
+
+        <div class="tablewrap" id="table-expenses"></div>
+      </div>
+    </section>
+
+    <!-- Data controls -->
+    <section class="panel panel--quiet">
+      <h2 class="panel__title">Your data</h2>
+      <p class="panel__sub">
+        Held in this browser's local storage. It is not synced, backed up, or sent anywhere.
+        Clearing your browser data deletes it — export first if you want a copy.
+      </p>
+      <div class="datarow">
+        <button class="btn btn--quiet" id="btn-export-2" type="button">Export JSON</button>
+        <button class="btn btn--danger" id="btn-wipe" type="button">Delete everything</button>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="shell footer__inner">
+    <p>Runs entirely in your browser. No account, no tracking, no network requests.</p>
+    <p><a href="https://austinwilkins.dev" target="_blank" rel="noopener">Built by Austin Wilkins ↗</a></p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script src="assets/js/store.js"></script>
+<script src="assets/js/charts.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
