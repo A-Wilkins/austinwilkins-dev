@@ -227,22 +227,18 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 @media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
 
-/* ---------- experience timeline ---------- */
-.timeline { border-top: 1px solid var(--line); }
-.job {
-  display: grid; grid-template-columns: 190px 1fr; gap: clamp(1rem, 4vw, 3rem);
-  padding: 1.9rem 0; border-bottom: 1px solid var(--line);
-}
-.job__meta p { margin: 0; color: var(--muted); font-size: .78rem; }
-.job__dates { color: var(--text) !important; margin-bottom: .2rem !important; }
-.job__role { font-size: 1.18rem; font-weight: 600; margin-bottom: .25rem; }
-.job__co { color: var(--accent); font-size: .95rem; margin: 0 0 .8rem; }
-.job__desc { color: var(--muted); font-size: .95rem; margin: 0; max-width: 68ch; }
+/* ---------- capabilities ---------- */
+.caps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; }
+.cap { border-top: 2px solid var(--accent); padding-top: 1.3rem; }
+.cap__num { color: var(--accent); font-size: .78rem; margin: 0 0 .7rem; letter-spacing: .12em; }
+.cap__title { font-size: 1.28rem; font-weight: 600; margin-bottom: .7rem; }
+.cap__desc { color: var(--muted); font-size: .95rem; margin: 0; }
 
-@media (max-width: 720px) {
-  .job { grid-template-columns: 1fr; gap: .7rem; }
-  .job__meta { display: flex; gap: 1rem; }
+.cred {
+  margin: 3.2rem 0 0; padding-top: 1.6rem; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: .92rem;
 }
+.cred strong { color: var(--text); font-weight: 500; }
 
 /* ---------- project cards ---------- */
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.3rem; }

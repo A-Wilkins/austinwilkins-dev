@@ -6,7 +6,7 @@ no installs. **Double-click `index.html`** and it opens in your browser, fully w
 ```
 austinwilkins-dev/
 ├── index.html              the whole site (one page, anchor navigation)
-│                           sections: About · Experience · Work · Stack · Contact
+│                           sections: About · Capabilities · Work · Stack · Contact
 ├── assets/
 │   ├── css/styles.css      design system — all tokens live in :root at the top
 │   ├── js/main.js          theme toggle, typewriter, scroll reveals, nav state
