@@ -25,6 +25,9 @@
   --wrap: 1120px;
   --radius: 14px;
   --ease: cubic-bezier(.22,.61,.36,1);
+  /* long tail-out curve — the motion decelerates for most of its duration,
+     which is what reads as "smooth" rather than "slides then stops" */
+  --ease-reveal: cubic-bezier(.16,1,.3,1);
   --dur: .45s;
 }
 
@@ -381,10 +384,17 @@ ul { list-style: none; margin: 0; padding: 0; }
    If the script fails, is blocked, or never runs, every section renders normally.  */
 .js .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity .7s var(--ease), transform .7s var(--ease);
+  /* translate3d, not translateY: promotes to its own compositor layer so the
+     transition runs on the GPU and never repaints the section behind it */
+  transform: translate3d(0, 20px, 0);
+  transition: opacity .8s var(--ease-reveal), transform .8s var(--ease-reveal);
 }
-.js .reveal.is-visible { opacity: 1; transform: none; }
+.js .reveal.is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
+
+/* Once an element has finished revealing, main.js strips these classes and the
+   inline stagger delay. That matters: while .reveal is present it out-specifies
+   component hover rules like .card:hover, and a leftover transition-delay would
+   make every later hover feel laggy. */
 
 @media (prefers-reduced-motion: reduce) {
   .js .reveal { opacity: 1; transform: none; transition: none; }

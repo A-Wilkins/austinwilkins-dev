@@ -71,26 +71,49 @@
     // safety net: never leave content invisible
     Array.prototype.forEach.call(revealables, function (el) { el.classList.add('is-visible'); });
   } else {
+    // Hand the element back to normal CSS once it has finished revealing.
+    // Leaving .reveal on would keep out-specifying hover rules, and leaving the
+    // inline delay on would postpone every later transition by up to 300ms.
+    function settle(el) {
+      el.classList.remove('reveal', 'is-visible');
+      el.style.transitionDelay = '';
+    }
+
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        io.unobserve(entry.target);
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        var el = entry.target;
+        el.classList.add('is-visible');
+        io.unobserve(el);
 
-    Array.prototype.forEach.call(revealables, function (el, i) {
-      // small stagger for siblings so grids cascade instead of popping at once
-      el.style.transitionDelay = (Math.min(i, 4) * 70) + 'ms';
+        var timer;
+        function done() {
+          clearTimeout(timer);
+          el.removeEventListener('transitionend', done);
+          settle(el);
+        }
+        el.addEventListener('transitionend', done);
+        timer = setTimeout(done, 1600);   // fallback if transitionend never fires
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+
+    Array.prototype.forEach.call(revealables, function (el) {
+      // Stagger by position among revealing siblings, not by global index, so
+      // each grid and section cascades on its own instead of every element
+      // past the fifth sharing one flat delay.
+      var group = Array.prototype.filter.call(el.parentNode.children, function (c) {
+        return c.classList && c.classList.contains('reveal');
+      });
+      var i = group.indexOf(el);
+      el.style.transitionDelay = (Math.min(i < 0 ? 0 : i, 5) * 60) + 'ms';
       io.observe(el);
     });
 
-    // belt and braces: if anything is still hidden after load, show it
+    // belt and braces: if anything above the fold is still hidden after load, show it
     window.addEventListener('load', function () {
       setTimeout(function () {
-        Array.prototype.forEach.call(revealables, function (el) {
-          var box = el.getBoundingClientRect();
-          if (box.top < window.innerHeight) el.classList.add('is-visible');
+        document.querySelectorAll('.reveal:not(.is-visible)').forEach(function (el) {
+          if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-visible');
         });
       }, 400);
     });
