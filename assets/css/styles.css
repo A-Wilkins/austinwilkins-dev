@@ -10,8 +10,10 @@
   --surface:   #1c2026;
   --text:      #ecedef;
   --muted:     #8b909a;
-  --accent:    #e5643c;
-  --accent-dim:#f08a68;
+  --accent:    #4a8fe7;   /* 5.60:1 on the page, 4.96:1 on cards */
+  --accent-dim:#69a5f0;   /* button hover                        */
+  --accent-ink:#121418;   /* text ON the accent — near-black beats
+                             white here: 5.60:1 vs 3.29:1        */
   --line:      rgba(255,255,255,.09);
   --line-soft: rgba(255,255,255,.05);
   --art-line:  rgba(255,255,255,.24);
@@ -37,8 +39,9 @@
   --surface:   #ffffff;
   --text:      #14161a;
   --muted:     #5c626c;
-  --accent:    #c84a26;
-  --accent-dim:#a83c1d;
+  --accent:    #2563eb;   /* 4.91:1 on the page                  */
+  --accent-dim:#1d4ed8;   /* button hover, white text 6.70:1     */
+  --accent-ink:#ffffff;   /* 5.17:1 on the light accent          */
   --line:      rgba(0,0,0,.11);
   --line-soft: rgba(0,0,0,.06);
   --art-line:  rgba(0,0,0,.24);
@@ -74,7 +77,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 
 .skip-link {
   position: absolute; left: -9999px; top: 0; z-index: 100;
-  background: var(--accent); color: #fff; padding: .7rem 1.1rem; border-radius: 0 0 8px 0;
+  background: var(--accent); color: var(--accent-ink); padding: .7rem 1.1rem; border-radius: 0 0 8px 0;
 }
 .skip-link:focus { left: 0; }
 
@@ -241,8 +244,8 @@ ul { list-style: none; margin: 0; padding: 0; }
   transition: transform .3s var(--ease), background-color .3s var(--ease),
               border-color .3s var(--ease), color .3s var(--ease);
 }
-.btn--primary { background: var(--accent); color: #fff; }
-.btn--primary:hover { background: var(--accent-dim); transform: translateY(-2px); }
+.btn--primary { background: var(--accent); color: var(--accent-ink); }
+.btn--primary:hover { background: var(--accent-dim); color: var(--accent-ink); transform: translateY(-2px); }
 .btn--ghost { border-color: var(--line); color: var(--text); }
 .btn--ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 .btn--lg { padding: .95rem 1.9rem; font-size: 1rem; font-family: var(--font-mono); }
