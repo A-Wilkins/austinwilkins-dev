@@ -146,6 +146,41 @@
   }, { passive: true });
   onScroll();
 
+  /* ---------- copy email ----------------------------------------------
+     mailto: only works if the visitor has a mail handler registered. When
+     they do not, the link silently does nothing, so offer the address
+     directly rather than leaving them stuck.                              */
+  var copyBtn = document.getElementById('copy-email');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function () {
+      var address = copyBtn.getAttribute('data-email');
+      var original = copyBtn.textContent;
+
+      function done(ok) {
+        copyBtn.textContent = ok ? 'Copied' : address;
+        setTimeout(function () { copyBtn.textContent = original; }, 2000);
+      }
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(address).then(function () { done(true); },
+                                                    function () { done(false); });
+      } else {
+        // fallback for http:// and older browsers
+        var ta = document.createElement('textarea');
+        ta.value = address;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        done(ok);
+      }
+    });
+  }
+
   /* ---------- footer year --------------------------------------------- */
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();

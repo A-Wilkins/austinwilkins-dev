@@ -237,10 +237,15 @@ ul { list-style: none; margin: 0; padding: 0; }
 .hero__cta { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2.2rem; }
 
 /* ---------- buttons ---------- */
+/* Works on both <a> and <button>. A real <button> arrives with a UA
+   background (buttonface) and its own font, neither of which an <a> has,
+   so both are reset here rather than per-variant. */
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   padding: .78rem 1.5rem; border-radius: 10px; text-decoration: none;
-  font-size: .95rem; font-weight: 500; border: 1px solid transparent;
+  font-family: inherit; font-size: .95rem; font-weight: 500;
+  border: 1px solid transparent; background: none; color: inherit;
+  -webkit-appearance: none; appearance: none; cursor: pointer;
   transition: transform .3s var(--ease), background-color .3s var(--ease),
               border-color .3s var(--ease), color .3s var(--ease);
 }
@@ -368,6 +373,7 @@ ul { list-style: none; margin: 0; padding: 0; }
 .contact { max-width: 46ch; }
 .contact__title { margin-bottom: 1.2rem; }
 .contact__blurb { color: var(--muted); margin-bottom: 2rem; }
+.contact__actions { display: flex; flex-wrap: wrap; align-items: center; gap: .7rem; }
 .contact__links { display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: 1.8rem; }
 .contact__links a {
   font-family: var(--font-mono); font-size: .84rem; color: var(--muted);

@@ -45,7 +45,7 @@ try{var t=localStorage.getItem('theme');if(t)d.setAttribute('data-theme',t);}cat
       "name": "Austin Wilkins",
       "url": "https://austinwilkins.dev/",
       "jobTitle": "Software Engineer",
-      "email": "mailto:awilkins012@gmail.com",
+      "email": "mailto:austin@austinwilkins.dev",
       "sameAs": [
         "https://www.linkedin.com/in/austin-r-wilkins/",
         "https://github.com/A-Wilkins"
@@ -126,7 +126,7 @@ try{var t=localStorage.getItem('theme');if(t)d.setAttribute('data-theme',t);}cat
       <a class="iconbtn" href="https://www.linkedin.com/in/austin-r-wilkins/" target="_blank" rel="noopener" aria-label="LinkedIn profile">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3 9h4v12H3V9Zm7 0h3.8v1.64h.05A4.17 4.17 0 0 1 17.6 8.7c3.7 0 4.4 2.36 4.4 5.44V21h-4v-5.9c0-1.4-.03-3.22-2-3.22-2 0-2.3 1.53-2.3 3.11V21h-4V9Z"/></svg>
       </a>
-      <a class="iconbtn" href="mailto:awilkins012@gmail.com" aria-label="Email Austin">
+      <a class="iconbtn" href="mailto:austin@austinwilkins.dev" aria-label="Email Austin">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm9 8.2L4.5 7.3v10.2h15V7.3L12 13.2Zm0-1.9 7.2-5.3H4.8L12 11.3Z"/></svg>
       </a>
       <button class="iconbtn iconbtn--toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
@@ -492,7 +492,11 @@ try{var t=localStorage.getItem('theme');if(t)d.setAttribute('data-theme',t);}cat
           I am open to software engineering roles and to interesting project work. The fastest
           way to reach me is email.
         </p>
-        <a class="btn btn--primary btn--lg" href="mailto:awilkins012@gmail.com">awilkins012@gmail.com</a>
+        <div class="contact__actions">
+          <a class="btn btn--primary btn--lg" href="mailto:austin@austinwilkins.dev">austin@austinwilkins.dev</a>
+          <button class="btn btn--ghost" type="button" id="copy-email"
+                  data-email="austin@austinwilkins.dev">Copy address</button>
+        </div>
 
         <!-- repeated here because the header icons are hidden on small screens -->
         <ul class="contact__links">
