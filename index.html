@@ -498,6 +498,14 @@ try{var t=localStorage.getItem('theme');if(t)d.setAttribute('data-theme',t);}cat
                   data-email="austin@austinwilkins.dev">Copy address</button>
         </div>
 
+        <!-- mailto: respects whatever mail client the visitor actually uses, so it
+             stays the primary action. This is the escape hatch for the many people
+             on Gmail whose browser has no mailto handler registered. -->
+        <p class="contact__alt">
+          No mail app? <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=austin@austinwilkins.dev"
+             target="_blank" rel="noopener">Compose in Gmail &#8599;</a>
+        </p>
+
         <!-- repeated here because the header icons are hidden on small screens -->
         <ul class="contact__links">
           <li><a href="https://www.linkedin.com/in/austin-r-wilkins/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
